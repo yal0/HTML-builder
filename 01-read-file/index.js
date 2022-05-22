@@ -1,5 +1,8 @@
 //console.log('Hello!');
 const path = require('path');
 const fs = require('fs');
-const readableStream = fs.createReadStream(path.join(__dirname, 'text.txt'),'utf-8');
-readableStream.on('data', chunk => console.log(chunk));
+const stream = fs.createReadStream(path.join(__dirname, 'text.txt'),'utf-8');
+let data = '';
+stream.on('data', chunk => data += chunk);
+stream.on('end', () => console.log(data));
+stream.on('error', error => console.log(error.message));
